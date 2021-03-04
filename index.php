@@ -140,8 +140,29 @@ try{
 				}
 			}
 		}
-	}	
-	echo "Process Finished! please check yout table <b>$DbName</b> on your database <b>$tableName</b> ";
+	}
+	
+	//PRINTING RESULT
+	echo "Process Finished! please check yout table <b>$DbName</b> on your database <b>$tableName</b> the next is the uploaded data<br>";
+	
+	$sql =  "SELECT * FROM $tableName";
+	$arrParams = array();
+	$result = $connect->selectRows($sql, $arrParams);
+	if($result){
+		echo "<br><b>Total:".count($result)."</b><br>";
+		echo "id,name,street_no,street_dir,street_name,street_type,city,subarea,postcode,suites,levels,strata_no,slug,lat,lng";
+		foreach($result[0] as $k=>$r){
+			echo $k.",";
+		}
+		echo "<br>";
+		foreach($result as $res){
+			foreach($res as $r){
+				echo $r.",";
+			}
+			echo "<br>";
+		}
+	}
+	//END
 	
 }catch(PDOException $e) {
 	echo "Connection failed: " . $e->getMessage();
